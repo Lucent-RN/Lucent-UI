@@ -47,14 +47,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Trungkien03/lucent-ui.git"
+    "url": "git+https://github.com/Lucent-RN/Lucent-UI.git"
   },
   "author": "Kien Nguyen <trungkiennguyen0310@gmail.com> (https://github.com/Trungkien03)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Trungkien03/lucent-ui/issues"
+    "url": "https://github.com/Lucent-RN/Lucent-UI/issues"
   },
-  "homepage": "https://github.com/Trungkien03/lucent-ui#readme",
+  "homepage": "https://github.com/Lucent-RN/Lucent-UI#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
