@@ -244,6 +244,12 @@ const LIGHT_COLORS = {
     border: colorVariables.neutral_300,
     textColor: colorVariables.neutral_900,
   },
+  brand: {
+    primary50: colorVariables.brand_50,
+    primary500: colorVariables.brand_500,
+    primary700: colorVariables.brand_700,
+    primary900: colorVariables.brand_900,
+  },
 };
 
 const DARK_COLORS: ColorTypes = {
@@ -361,6 +367,12 @@ const DARK_COLORS: ColorTypes = {
     placeholder: colorVariables.neutral_500,
     border: colorVariables.neutral_700,
     textColor: colorVariables.neutral_0,
+  },
+  brand: {
+    primary50: colorVariables.brand_50,
+    primary500: colorVariables.brand_500,
+    primary700: colorVariables.brand_700,
+    primary900: colorVariables.brand_900,
   },
 };
 

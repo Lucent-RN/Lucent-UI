@@ -44,9 +44,13 @@ android.iml
 # Cocoapods
 #
 example/ios/Pods
+example/ios/Podfile.lock
+example/ios/*.xcworkspace
+example/ios/*.xcworkspace/**
 
 # Ruby
 example/vendor/
+example/Gemfile.lock
 
 # node.js
 #
@@ -86,3 +90,4 @@ android/generated
 nitrogen/
 
 bun.lock
+yarn.lock
