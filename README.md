@@ -23,8 +23,10 @@ yarn add lucent-ui
 Make sure you have these installed:
 
 ```bash
-npm install react react-native react-native-safe-area-context
+npm install react react-native react-native-safe-area-context @expo/vector-icons
 ```
+
+**Note**: `@expo/vector-icons` is optional but recommended for icon support. If you don't install it, icon components will render placeholders for string-based icon names.
 
 ## Usage
 
@@ -64,6 +66,30 @@ function App() {
     />
   );
 }
+```
+
+## Icon Support
+
+The library includes an `Icon` utility component that supports multiple icon sources:
+
+- **Ionicons** (string names): Requires `@expo/vector-icons`
+- **Custom ReactNode**: Any React component
+- **Image sources**: Local or remote images
+- **Functions**: Functions that return ReactNode
+
+### Using Icons
+
+```tsx
+import { Icon } from 'lucent-ui';
+
+// Ionicons (requires @expo/vector-icons)
+<Icon source="checkmark-circle" size={24} color="#000" />
+
+// Custom ReactNode
+<Icon source={<CustomIcon />} />
+
+// Image source
+<Icon source={require('./icon.png')} size={24} />
 ```
 
 ## Components

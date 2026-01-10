@@ -1,12 +1,23 @@
 import {
+  Accordion,
   Badge,
   Button,
+  Checkbox,
+  CheckboxGroup,
   Divider,
+  IconButton,
+  List,
   LoadingModal,
   OTPInput,
+  RadioButton,
+  RadioButtonGroup,
+  Stepper,
+  TabViewGroup,
   TextDivider,
   TextInput,
   TextView,
+  Toggle,
+  ToggleGroup,
 } from 'lucent-ui';
 import { useState } from 'react';
 import {
@@ -23,6 +34,21 @@ export default function App() {
   const [password, setPassword] = useState('');
   const [showLoading, setShowLoading] = useState(false);
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [checkboxChecked, setCheckboxChecked] = useState(false);
+  const [checkboxGroupItems, setCheckboxGroupItems] = useState([
+    { name: '1', label: 'Option 1', value: false },
+    { name: '2', label: 'Option 2', value: false },
+    { name: '3', label: 'Option 3', value: false },
+  ]);
+  const [radioSelected, setRadioSelected] = useState('option1');
+  const [toggleValue, setToggleValue] = useState(false);
+  const [toggleGroupItems, setToggleGroupItems] = useState([
+    { id: '1', label: 'Toggle 1', value: false },
+    { id: '2', label: 'Toggle 2', value: false },
+    { id: '3', label: 'Toggle 3', value: false },
+  ]);
+  const [activeTab, setActiveTab] = useState(0);
+  const [activeStep, setActiveStep] = useState(0);
 
   const toggleTheme = () => {
     setTheme(theme === 'light' ? 'dark' : 'light');
@@ -301,6 +327,311 @@ export default function App() {
               variant="primary"
               theme={theme}
             />
+          </View>
+        </View>
+
+        <Divider style={styles.divider} />
+
+        {/* Checkbox Section */}
+        <View style={styles.section}>
+          <TextView
+            style={[
+              styles.sectionTitle,
+              { color: theme === 'light' ? '#000000' : '#FFFFFF' },
+            ]}
+          >
+            Checkbox
+          </TextView>
+          <View style={styles.componentGroup}>
+            <Checkbox
+              label="Single Checkbox"
+              checked={checkboxChecked}
+              onChange={setCheckboxChecked}
+              theme={theme}
+            />
+            <Checkbox
+              label="Disabled Checkbox"
+              checked={false}
+              disabled={true}
+              theme={theme}
+            />
+            <CheckboxGroup
+              items={checkboxGroupItems.map((item) => ({
+                name: item.name,
+                label: item.label,
+                value: item.value,
+                onChange: (checked) => {
+                  setCheckboxGroupItems((prev) =>
+                    prev.map((i) =>
+                      i.name === item.name ? { ...i, value: checked } : i
+                    )
+                  );
+                },
+              }))}
+              theme={theme}
+            />
+          </View>
+        </View>
+
+        <Divider style={styles.divider} />
+
+        {/* RadioButton Section */}
+        <View style={styles.section}>
+          <TextView
+            style={[
+              styles.sectionTitle,
+              { color: theme === 'light' ? '#000000' : '#FFFFFF' },
+            ]}
+          >
+            Radio Button
+          </TextView>
+          <View style={styles.componentGroup}>
+            <RadioButton
+              label="Option 1"
+              selected={radioSelected === 'option1'}
+              onPress={() => setRadioSelected('option1')}
+              theme={theme}
+            />
+            <RadioButton
+              label="Option 2"
+              selected={radioSelected === 'option2'}
+              onPress={() => setRadioSelected('option2')}
+              theme={theme}
+            />
+            <RadioButton
+              label="Disabled"
+              selected={false}
+              disabled={true}
+              theme={theme}
+            />
+            <RadioButtonGroup
+              options={[
+                { value: 'group1', label: 'Group Option 1' },
+                { value: 'group2', label: 'Group Option 2' },
+                { value: 'group3', label: 'Group Option 3' },
+              ]}
+              selectedValue={radioSelected}
+              onChange={setRadioSelected}
+              theme={theme}
+            />
+          </View>
+        </View>
+
+        <Divider style={styles.divider} />
+
+        {/* Toggle Section */}
+        <View style={styles.section}>
+          <TextView
+            style={[
+              styles.sectionTitle,
+              { color: theme === 'light' ? '#000000' : '#FFFFFF' },
+            ]}
+          >
+            Toggle
+          </TextView>
+          <View style={styles.componentGroup}>
+            <Toggle
+              label="Toggle Switch"
+              value={toggleValue}
+              onValueChange={setToggleValue}
+              theme={theme}
+            />
+            <Toggle
+              label="Disabled Toggle"
+              value={false}
+              disabled={true}
+              theme={theme}
+            />
+            <ToggleGroup
+              items={toggleGroupItems.map((item) => ({
+                id: item.id,
+                label: item.label,
+                value: item.value,
+                onValueChange: (value) => {
+                  setToggleGroupItems((prev) =>
+                    prev.map((i) => (i.id === item.id ? { ...i, value } : i))
+                  );
+                },
+              }))}
+              theme={theme}
+            />
+          </View>
+        </View>
+
+        <Divider style={styles.divider} />
+
+        {/* IconButton Section */}
+        <View style={styles.section}>
+          <TextView
+            style={[
+              styles.sectionTitle,
+              { color: theme === 'light' ? '#000000' : '#FFFFFF' },
+            ]}
+          >
+            Icon Button
+          </TextView>
+          <View
+            style={[
+              styles.componentGroup,
+              { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+            ]}
+          >
+            <IconButton
+              icon="⭐"
+              onPress={() => console.log('Icon pressed')}
+              variant="primary"
+              size="lg"
+              theme={theme}
+            />
+            <IconButton
+              icon="❤️"
+              onPress={() => console.log('Icon pressed')}
+              variant="secondary"
+              size="lg"
+              theme={theme}
+            />
+            <IconButton
+              icon="🔥"
+              onPress={() => console.log('Icon pressed')}
+              variant="ghost"
+              size="lg"
+              theme={theme}
+            />
+          </View>
+        </View>
+
+        <Divider style={styles.divider} />
+
+        {/* Stepper Section */}
+        <View style={styles.section}>
+          <TextView
+            style={[
+              styles.sectionTitle,
+              { color: theme === 'light' ? '#000000' : '#FFFFFF' },
+            ]}
+          >
+            Stepper
+          </TextView>
+          <View style={styles.componentGroup}>
+            <Stepper
+              steps={[
+                {
+                  label: 'Step 1',
+                  icon: '1',
+                  children: <TextView>Step 1 Content</TextView>,
+                },
+                {
+                  label: 'Step 2',
+                  icon: '2',
+                  children: <TextView>Step 2 Content</TextView>,
+                },
+                {
+                  label: 'Step 3',
+                  icon: '3',
+                  children: <TextView>Step 3 Content</TextView>,
+                },
+              ]}
+              activeStep={activeStep}
+              onStepChange={setActiveStep}
+              theme={theme}
+            />
+          </View>
+        </View>
+
+        <Divider style={styles.divider} />
+
+        {/* Accordion Section */}
+        <View style={styles.section}>
+          <TextView
+            style={[
+              styles.sectionTitle,
+              { color: theme === 'light' ? '#000000' : '#FFFFFF' },
+            ]}
+          >
+            Accordion
+          </TextView>
+          <View style={styles.componentGroup}>
+            <Accordion
+              title="Accordion Item 1"
+              content="This is the content for accordion item 1. You can put any content here."
+              theme={theme}
+            />
+            <Accordion
+              title="Accordion Item 2"
+              content="This is the content for accordion item 2. It can be expanded and collapsed."
+              theme={theme}
+            />
+          </View>
+        </View>
+
+        <Divider style={styles.divider} />
+
+        {/* List Section */}
+        <View style={styles.section}>
+          <TextView
+            style={[
+              styles.sectionTitle,
+              { color: theme === 'light' ? '#000000' : '#FFFFFF' },
+            ]}
+          >
+            List
+          </TextView>
+          <View style={styles.componentGroup}>
+            <List
+              title="Sample List"
+              data={[
+                {
+                  leftElement: <TextView>Item 1</TextView>,
+                  rightElement: <TextView>→</TextView>,
+                  onPress: () => console.log('Item 1 pressed'),
+                },
+                {
+                  leftElement: <TextView>Item 2</TextView>,
+                  rightElement: <TextView>→</TextView>,
+                  onPress: () => console.log('Item 2 pressed'),
+                },
+                {
+                  leftElement: <TextView>Item 3</TextView>,
+                  rightElement: <TextView>→</TextView>,
+                  onPress: () => console.log('Item 3 pressed'),
+                },
+              ]}
+              theme={theme}
+            />
+          </View>
+        </View>
+
+        <Divider style={styles.divider} />
+
+        {/* TabView Section */}
+        <View style={styles.section}>
+          <TextView
+            style={[
+              styles.sectionTitle,
+              { color: theme === 'light' ? '#000000' : '#FFFFFF' },
+            ]}
+          >
+            Tab View
+          </TextView>
+          <View style={styles.componentGroup}>
+            <TabViewGroup
+              tabs={[
+                { title: 'Tab 1' },
+                { title: 'Tab 2' },
+                { title: 'Tab 3' },
+              ]}
+              activeTabIndex={activeTab}
+              onTabChange={(index) => setActiveTab(index)}
+              theme={theme}
+            />
+            <TextView
+              style={[
+                styles.helperText,
+                { color: theme === 'light' ? '#666666' : '#999999' },
+              ]}
+            >
+              Active Tab: {activeTab + 1}
+            </TextView>
           </View>
         </View>
 

@@ -139,18 +139,64 @@ const TextInputField: React.FC<CustomTextInputFieldProps> = ({
           <TouchableOpacity
             onPress={() => setIsValueVisible((prev) => !prev)}
             style={styles.eyeIcon}
+            activeOpacity={0.7}
           >
             {visibilityIcon ? (
               visibilityIcon
             ) : (
-              <View
-                style={{
-                  width: isTablet ? scaleWidth(16) : scaleWidth(20),
-                  height: isTablet ? scaleWidth(16) : scaleWidth(20),
-                  backgroundColor: colors.input.placeholder,
-                  borderRadius: 2,
-                }}
-              />
+              <View style={styles.eyeIconContainer}>
+                {isValueVisible ? (
+                  // Eye open icon
+                  <View style={styles.eyeIconContent}>
+                    <View
+                      style={[
+                        styles.eyeShape,
+                        {
+                          borderColor: colors.input.placeholder,
+                        },
+                      ]}
+                    >
+                      <View
+                        style={[
+                          styles.eyePupil,
+                          {
+                            backgroundColor: colors.input.placeholder,
+                          },
+                        ]}
+                      />
+                    </View>
+                  </View>
+                ) : (
+                  // Eye closed icon (with slash)
+                  <View style={styles.eyeIconContent}>
+                    <View
+                      style={[
+                        styles.eyeShape,
+                        {
+                          borderColor: colors.input.placeholder,
+                        },
+                      ]}
+                    >
+                      <View
+                        style={[
+                          styles.eyePupil,
+                          {
+                            backgroundColor: colors.input.placeholder,
+                          },
+                        ]}
+                      />
+                    </View>
+                    <View
+                      style={[
+                        styles.eyeSlash,
+                        {
+                          backgroundColor: colors.input.placeholder,
+                        },
+                      ]}
+                    />
+                  </View>
+                )}
+              </View>
             )}
           </TouchableOpacity>
         )}
@@ -196,6 +242,41 @@ const createStyles = (_colors: ColorTypes, isTablet: boolean) =>
     },
     eyeIcon: {
       marginLeft: isTablet ? scaleWidth(8) : scaleWidth(10),
+      padding: scaleWidth(4),
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    eyeIconContainer: {
+      width: isTablet ? scaleWidth(20) : scaleWidth(24),
+      height: isTablet ? scaleWidth(20) : scaleWidth(24),
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    eyeIconContent: {
+      width: isTablet ? scaleWidth(16) : scaleWidth(20),
+      height: isTablet ? scaleWidth(16) : scaleWidth(20),
+      position: 'relative',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    eyeShape: {
+      width: isTablet ? scaleWidth(14) : scaleWidth(18),
+      height: isTablet ? scaleWidth(10) : scaleWidth(12),
+      borderWidth: isTablet ? scaleWidth(1.5) : scaleWidth(2),
+      borderRadius: isTablet ? scaleWidth(7) : scaleWidth(9),
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    eyePupil: {
+      width: isTablet ? scaleWidth(4) : scaleWidth(5),
+      height: isTablet ? scaleWidth(4) : scaleWidth(5),
+      borderRadius: isTablet ? scaleWidth(2) : scaleWidth(2.5),
+    },
+    eyeSlash: {
+      position: 'absolute',
+      width: isTablet ? scaleWidth(12) : scaleWidth(16),
+      height: isTablet ? scaleWidth(1.5) : scaleWidth(2),
+      transform: [{ rotate: '-45deg' }],
     },
     errorText: {
       marginTop: 4,

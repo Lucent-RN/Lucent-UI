@@ -129,18 +129,64 @@ const TextInputField: React.FC<CustomTextInputFieldProps> = ({
           <TouchableOpacity
             onPress={() => setIsValueVisible((prev) => !prev)}
             style={styles.eyeIcon}
+            activeOpacity={0.7}
           >
             {visibilityIcon ? (
               visibilityIcon
             ) : (
-              <View
-                style={{
-                  width: scaleWidth(20),
-                  height: scaleWidth(20),
-                  backgroundColor: colors.input.placeholder,
-                  borderRadius: 2,
-                }}
-              />
+              <View style={styles.eyeIconContainer}>
+                {isValueVisible ? (
+                  // Eye open icon
+                  <View style={styles.eyeIconContent}>
+                    <View
+                      style={[
+                        styles.eyeShape,
+                        {
+                          borderColor: colors.input.placeholder,
+                        },
+                      ]}
+                    >
+                      <View
+                        style={[
+                          styles.eyePupil,
+                          {
+                            backgroundColor: colors.input.placeholder,
+                          },
+                        ]}
+                      />
+                    </View>
+                  </View>
+                ) : (
+                  // Eye closed icon (with slash)
+                  <View style={styles.eyeIconContent}>
+                    <View
+                      style={[
+                        styles.eyeShape,
+                        {
+                          borderColor: colors.input.placeholder,
+                        },
+                      ]}
+                    >
+                      <View
+                        style={[
+                          styles.eyePupil,
+                          {
+                            backgroundColor: colors.input.placeholder,
+                          },
+                        ]}
+                      />
+                    </View>
+                    <View
+                      style={[
+                        styles.eyeSlash,
+                        {
+                          backgroundColor: colors.input.placeholder,
+                        },
+                      ]}
+                    />
+                  </View>
+                )}
+              </View>
             )}
           </TouchableOpacity>
         )}
@@ -182,6 +228,41 @@ const createStyles = (_colors: ColorTypes, _isTablet: boolean) =>
     },
     eyeIcon: {
       marginLeft: scaleWidth(10),
+      padding: scaleWidth(4),
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    eyeIconContainer: {
+      width: scaleWidth(24),
+      height: scaleWidth(24),
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    eyeIconContent: {
+      width: scaleWidth(20),
+      height: scaleWidth(20),
+      position: 'relative',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    eyeShape: {
+      width: scaleWidth(18),
+      height: scaleWidth(12),
+      borderWidth: scaleWidth(2),
+      borderRadius: scaleWidth(9),
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    eyePupil: {
+      width: scaleWidth(5),
+      height: scaleWidth(5),
+      borderRadius: scaleWidth(2.5),
+    },
+    eyeSlash: {
+      position: 'absolute',
+      width: scaleWidth(16),
+      height: scaleWidth(2),
+      transform: [{ rotate: '-45deg' }],
     },
     errorText: {
       marginTop: 4,
