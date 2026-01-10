@@ -1,12 +1,10 @@
-import { Text, View, StyleSheet } from 'react-native';
-import { multiply } from 'lucent-ui';
-
-const result = multiply(3, 7);
+import { Button } from 'lucent-ui';
+import { StyleSheet, View } from 'react-native';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
+      <Button title="Click me" onPress={() => console.log('Button pressed')} />
     </View>
   );
 }
