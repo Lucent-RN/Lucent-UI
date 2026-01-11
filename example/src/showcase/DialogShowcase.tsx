@@ -9,7 +9,7 @@ import {
   TextView,
 } from 'lucent-ui';
 import { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import type { AppearanceMode } from 'lucent-ui';
 
 interface DialogShowcaseProps {
@@ -99,8 +99,6 @@ export default function DialogShowcase({ theme }: DialogShowcaseProps) {
           <DialogHeader
             title="Confirm Action"
             subtitle="Are you sure you want to proceed with this action?"
-            showCloseButton={true}
-            onClose={() => setIsOpen2(false)}
             theme={theme}
           />
           <DialogBody theme={theme}>
@@ -199,35 +197,35 @@ export default function DialogShowcase({ theme }: DialogShowcaseProps) {
           <DialogHeader
             title="Long Content"
             subtitle="This dialog has scrollable content"
-            showCloseButton={true}
-            onClose={() => setIsOpen4(false)}
             theme={theme}
           />
-          <DialogBody theme={theme} scrollable={true} maxHeight={300}>
-            <TextView
-              style={{
-                color: theme === 'light' ? '#000000' : '#FFFFFF',
-                marginBottom: 16,
-              }}
-            >
-              This is a scrollable dialog body. When content exceeds the maximum
-              height, it becomes scrollable.
-            </TextView>
-            {Array.from({ length: 10 }).map((_, index) => (
+          <DialogBody theme={theme} maxHeight={300}>
+            <ScrollView showsVerticalScrollIndicator={true}>
               <TextView
-                key={index}
                 style={{
                   color: theme === 'light' ? '#000000' : '#FFFFFF',
-                  marginBottom: 12,
-                  lineHeight: 22,
+                  marginBottom: 16,
                 }}
               >
-                Paragraph {index + 1}: Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-                exercitation ullamco laboris.
+                This is a scrollable dialog body. When content exceeds the
+                maximum height, it becomes scrollable.
               </TextView>
-            ))}
+              {Array.from({ length: 10 }).map((_, index) => (
+                <TextView
+                  key={index}
+                  style={{
+                    color: theme === 'light' ? '#000000' : '#FFFFFF',
+                    marginBottom: 12,
+                    lineHeight: 22,
+                  }}
+                >
+                  Paragraph {index + 1}: Lorem ipsum dolor sit amet, consectetur
+                  adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
+                  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+                  exercitation ullamco laboris.
+                </TextView>
+              ))}
+            </ScrollView>
           </DialogBody>
           <DialogFooter theme={theme} align="right">
             <Button

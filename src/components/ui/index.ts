@@ -81,5 +81,10 @@ export type { TabViewGroupProps } from './tab-view/tab-view-group';
 export { default as TabViewItem } from './tab-view/tab-view-item';
 export type { TabItemProps } from './tab-view/tab-view-item';
 
+// Dialog Modal
+export * from './dialog-modal';
+
 // Re-export types
 export type { AppearanceMode } from '../../theme';
+
+export { scaleHeight, scaleWidth } from '../../theme';

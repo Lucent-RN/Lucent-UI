@@ -56,26 +56,32 @@ export interface ButtonProps
  * @param {ButtonProps} props - The properties for the Button component.
  * @returns {JSX.Element} The rendered Button component.
  */
-const Button = forwardRef<TouchableOpacity, ButtonProps>(
-  ({
-    title,
-    onPress,
-    variant = 'primary',
-    size = 'md',
-    theme = 'light',
-    isLoading = false,
-    loadingMode = 'replace',
-    disabled = false,
-    iconPosition = 'left',
-    iconGap = 10,
-    Icon,
-    iconFillColor,
-    buttonStyle,
-    titleStyle,
-    disabledStyle: _disabledStyle,
-    pressedStyle: _pressedStyle,
-    ...props
-  }) => {
+const Button = forwardRef<
+  React.ElementRef<typeof TouchableOpacity>,
+  ButtonProps
+>(
+  (
+    {
+      title,
+      onPress,
+      variant = 'primary',
+      size = 'md',
+      theme = 'light',
+      isLoading = false,
+      loadingMode = 'replace',
+      disabled = false,
+      iconPosition = 'left',
+      iconGap = 10,
+      Icon,
+      iconFillColor,
+      buttonStyle,
+      titleStyle,
+      disabledStyle: _disabledStyle,
+      pressedStyle: _pressedStyle,
+      ...props
+    },
+    ref
+  ) => {
     const colors = getThemeColors(theme);
     const isSmall = size === 'sm';
 
@@ -170,6 +176,7 @@ const Button = forwardRef<TouchableOpacity, ButtonProps>(
 
     return (
       <TouchableOpacity
+        ref={ref}
         testID="button"
         onPress={onPress}
         disabled={isLoading || disabled}
