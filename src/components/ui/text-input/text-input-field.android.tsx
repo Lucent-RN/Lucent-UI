@@ -1,15 +1,17 @@
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Animated,
+  Image,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 
-import type { ColorTypes } from '../../../theme';
-import { fonts, scaleHeight, scaleWidth } from '../../../theme';
+import { images } from '../../../assets';
 import { colorVariables } from '../../../constants';
+import type { ColorTypes } from '../../../theme';
+import { fonts, fontTablets, scaleHeight, scaleWidth } from '../../../theme';
 import { getThemeColors } from '../../../utils';
 import TextView from '../text-view';
 import type { CustomTextInputFieldProps } from './types';
@@ -64,13 +66,23 @@ const TextInputField: React.FC<CustomTextInputFieldProps> = ({
   const labelStyle = {
     top: animatedLabel.interpolate({
       inputRange: [0, 1],
-      outputRange: [scaleWidth(14), scaleHeight(-10)],
+      outputRange: [
+        isTablet ? scaleWidth(6) : scaleWidth(14),
+        isTablet ? scaleHeight(-8) : scaleHeight(-10),
+      ],
     }),
     fontSize: animatedLabel.interpolate({
-      inputRange: [0, scaleWidth(8)],
+      inputRange: [
+        0,
+        isTablet ? scaleWidth(fontTablets.size.xxs) : scaleWidth(8),
+      ],
       outputRange: [
-        scaleWidth(fonts.size.medium),
-        scaleWidth(fonts.size.small),
+        isTablet
+          ? scaleWidth(fontTablets.size.xxs)
+          : scaleWidth(fonts.size.medium),
+        isTablet
+          ? scaleWidth(fontTablets.size.xxs)
+          : scaleWidth(fonts.size.small),
       ],
     }),
     color: error ? colorVariables.red_500 : colors.input.placeholder,
@@ -134,59 +146,16 @@ const TextInputField: React.FC<CustomTextInputFieldProps> = ({
             {visibilityIcon ? (
               visibilityIcon
             ) : (
-              <View style={styles.eyeIconContainer}>
-                {isValueVisible ? (
-                  // Eye open icon
-                  <View style={styles.eyeIconContent}>
-                    <View
-                      style={[
-                        styles.eyeShape,
-                        {
-                          borderColor: colors.input.placeholder,
-                        },
-                      ]}
-                    >
-                      <View
-                        style={[
-                          styles.eyePupil,
-                          {
-                            backgroundColor: colors.input.placeholder,
-                          },
-                        ]}
-                      />
-                    </View>
-                  </View>
-                ) : (
-                  // Eye closed icon (with slash)
-                  <View style={styles.eyeIconContent}>
-                    <View
-                      style={[
-                        styles.eyeShape,
-                        {
-                          borderColor: colors.input.placeholder,
-                        },
-                      ]}
-                    >
-                      <View
-                        style={[
-                          styles.eyePupil,
-                          {
-                            backgroundColor: colors.input.placeholder,
-                          },
-                        ]}
-                      />
-                    </View>
-                    <View
-                      style={[
-                        styles.eyeSlash,
-                        {
-                          backgroundColor: colors.input.placeholder,
-                        },
-                      ]}
-                    />
-                  </View>
-                )}
-              </View>
+              <Image
+                source={isValueVisible ? images.eye : images.eyeOff}
+                style={[
+                  styles.eyeImage,
+                  {
+                    tintColor: colors.input.placeholder,
+                  },
+                ]}
+                resizeMode="stretch"
+              />
             )}
           </TouchableOpacity>
         )}
@@ -201,80 +170,58 @@ const TextInputField: React.FC<CustomTextInputFieldProps> = ({
   );
 };
 
-const createStyles = (_colors: ColorTypes, _isTablet: boolean) =>
+const createStyles = (_colors: ColorTypes, isTablet: boolean) =>
   StyleSheet.create({
     container: {
-      marginVertical: scaleHeight(5),
+      marginVertical: isTablet ? scaleHeight(4) : scaleHeight(5),
     },
     inputContainer: {
       position: 'relative',
       flexDirection: 'row',
       alignItems: 'center',
-      borderWidth: scaleWidth(2),
-      borderRadius: scaleWidth(12),
-      padding: scaleWidth(14),
+      borderWidth: isTablet ? scaleWidth(1) : scaleWidth(2),
+      borderRadius: isTablet ? scaleWidth(8) : scaleWidth(12),
+      padding: isTablet ? scaleWidth(6) : scaleWidth(14),
     },
     textInput: {
       flex: 1,
-      fontSize: scaleWidth(fonts.size.small),
+      fontSize: isTablet
+        ? scaleWidth(fontTablets.size.xxs)
+        : scaleWidth(fonts.size.small),
     },
     floatingLabel: {
       position: 'absolute',
-      left: scaleWidth(12),
+      left: isTablet ? scaleWidth(8) : scaleWidth(12),
       paddingHorizontal: 6,
       paddingVertical: 0,
-      borderRadius: scaleWidth(6),
-      fontSize: scaleWidth(fonts.size.small),
+      borderRadius: isTablet ? scaleWidth(4) : scaleWidth(6),
+      fontSize: isTablet
+        ? scaleWidth(fontTablets.size.xxs)
+        : scaleWidth(fonts.size.small),
     },
     eyeIcon: {
-      marginLeft: scaleWidth(10),
-      padding: scaleWidth(4),
       justifyContent: 'center',
       alignItems: 'center',
     },
-    eyeIconContainer: {
-      width: scaleWidth(24),
-      height: scaleWidth(24),
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    eyeIconContent: {
-      width: scaleWidth(20),
-      height: scaleWidth(20),
-      position: 'relative',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    eyeShape: {
-      width: scaleWidth(18),
-      height: scaleWidth(12),
-      borderWidth: scaleWidth(2),
-      borderRadius: scaleWidth(9),
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    eyePupil: {
-      width: scaleWidth(5),
-      height: scaleWidth(5),
-      borderRadius: scaleWidth(2.5),
-    },
-    eyeSlash: {
-      position: 'absolute',
-      width: scaleWidth(16),
-      height: scaleWidth(2),
-      transform: [{ rotate: '-45deg' }],
+    eyeImage: {
+      width: isTablet ? scaleWidth(16) : scaleWidth(20),
+      height: isTablet ? scaleWidth(16) : scaleWidth(20),
     },
     errorText: {
       marginTop: 4,
       marginLeft: 10,
       color: colorVariables.red_500,
-      fontSize: scaleWidth(fonts.size.small),
+      fontSize: isTablet
+        ? scaleWidth(fontTablets.size.xxs)
+        : scaleWidth(fonts.size.small),
     },
     helperText: {
       marginTop: 4,
       marginLeft: 10,
       color: colorVariables.neutral_500,
-      fontSize: scaleWidth(fonts.size.small),
+      fontSize: isTablet
+        ? scaleWidth(fontTablets.size.xxs)
+        : scaleWidth(fonts.size.small),
     },
     leftIcon: {
       marginRight: 10,

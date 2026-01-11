@@ -1,12 +1,14 @@
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Animated,
+  Image,
   StyleSheet,
   TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 
+import { images } from '../../../assets';
 import type { ColorTypes } from '../../../theme';
 import { fonts, fontTablets, scaleHeight, scaleWidth } from '../../../theme';
 import { colorVariables } from '../../../constants';
@@ -144,59 +146,16 @@ const TextInputField: React.FC<CustomTextInputFieldProps> = ({
             {visibilityIcon ? (
               visibilityIcon
             ) : (
-              <View style={styles.eyeIconContainer}>
-                {isValueVisible ? (
-                  // Eye open icon
-                  <View style={styles.eyeIconContent}>
-                    <View
-                      style={[
-                        styles.eyeShape,
-                        {
-                          borderColor: colors.input.placeholder,
-                        },
-                      ]}
-                    >
-                      <View
-                        style={[
-                          styles.eyePupil,
-                          {
-                            backgroundColor: colors.input.placeholder,
-                          },
-                        ]}
-                      />
-                    </View>
-                  </View>
-                ) : (
-                  // Eye closed icon (with slash)
-                  <View style={styles.eyeIconContent}>
-                    <View
-                      style={[
-                        styles.eyeShape,
-                        {
-                          borderColor: colors.input.placeholder,
-                        },
-                      ]}
-                    >
-                      <View
-                        style={[
-                          styles.eyePupil,
-                          {
-                            backgroundColor: colors.input.placeholder,
-                          },
-                        ]}
-                      />
-                    </View>
-                    <View
-                      style={[
-                        styles.eyeSlash,
-                        {
-                          backgroundColor: colors.input.placeholder,
-                        },
-                      ]}
-                    />
-                  </View>
-                )}
-              </View>
+              <Image
+                source={isValueVisible ? images.eye : images.eyeOff}
+                style={[
+                  styles.eyeImage,
+                  {
+                    tintColor: colors.input.placeholder,
+                  },
+                ]}
+                resizeMode="stretch"
+              />
             )}
           </TouchableOpacity>
         )}
@@ -241,42 +200,12 @@ const createStyles = (_colors: ColorTypes, isTablet: boolean) =>
         : scaleWidth(fonts.size.small),
     },
     eyeIcon: {
-      marginLeft: isTablet ? scaleWidth(8) : scaleWidth(10),
-      padding: scaleWidth(4),
       justifyContent: 'center',
       alignItems: 'center',
     },
-    eyeIconContainer: {
-      width: isTablet ? scaleWidth(20) : scaleWidth(24),
-      height: isTablet ? scaleWidth(20) : scaleWidth(24),
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    eyeIconContent: {
+    eyeImage: {
       width: isTablet ? scaleWidth(16) : scaleWidth(20),
       height: isTablet ? scaleWidth(16) : scaleWidth(20),
-      position: 'relative',
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    eyeShape: {
-      width: isTablet ? scaleWidth(14) : scaleWidth(18),
-      height: isTablet ? scaleWidth(10) : scaleWidth(12),
-      borderWidth: isTablet ? scaleWidth(1.5) : scaleWidth(2),
-      borderRadius: isTablet ? scaleWidth(7) : scaleWidth(9),
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    eyePupil: {
-      width: isTablet ? scaleWidth(4) : scaleWidth(5),
-      height: isTablet ? scaleWidth(4) : scaleWidth(5),
-      borderRadius: isTablet ? scaleWidth(2) : scaleWidth(2.5),
-    },
-    eyeSlash: {
-      position: 'absolute',
-      width: isTablet ? scaleWidth(12) : scaleWidth(16),
-      height: isTablet ? scaleWidth(1.5) : scaleWidth(2),
-      transform: [{ rotate: '-45deg' }],
     },
     errorText: {
       marginTop: 4,
