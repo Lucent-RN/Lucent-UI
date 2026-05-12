@@ -1,4 +1,23 @@
 {
   "name": "LucentUiExample",
-  "displayName": "LucentUiExample"
+  "displayName": "LucentUiExample",
+  "expo": {
+    "name": "Lucent UI Example",
+    "slug": "lucent-ui-example",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.anonymous.lucentuiexample"
+    },
+    "ios": {
+      "bundleIdentifier": "com.anonymous.lucentuiexample"
+    }
+  }
 }
