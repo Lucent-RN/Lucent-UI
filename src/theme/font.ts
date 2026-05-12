@@ -1,10 +1,3 @@
-export const font_tokens = {
-  regular: 'Poppins-Regular',
-  medium: 'Poppins-Medium',
-  bold: 'Poppins-Bold',
-  semibold: 'Poppins-SemiBold',
-};
-
 export const fonts = {
   size: {
     h1: 40,
@@ -22,12 +15,6 @@ export const fonts = {
     xl: 18,
     xxl: 20,
     xxxl: 24,
-  },
-  fontFamily: {
-    regular: font_tokens.regular,
-    medium: font_tokens.medium,
-    bold: font_tokens.bold,
-    semibold: font_tokens.semibold,
   },
 };
 

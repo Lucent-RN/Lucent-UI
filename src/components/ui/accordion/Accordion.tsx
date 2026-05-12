@@ -2,10 +2,25 @@ import { iconSize, scaleHeight, scaleWidth } from '../../../theme';
 import type { ColorTypes } from '../../../theme';
 import { getThemeColors } from '../../../utils';
 import type { AppearanceMode } from '../../../theme';
-import { memo, useCallback, useMemo, useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  Animated,
+  LayoutAnimation,
+  Platform,
+  Pressable,
+  StyleSheet,
+  UIManager,
+  View,
+} from 'react-native';
 import type { ViewProps } from 'react-native';
 import TextView from '../text-view';
+
+if (
+  Platform.OS === 'android' &&
+  UIManager.setLayoutAnimationEnabledExperimental
+) {
+  UIManager.setLayoutAnimationEnabledExperimental(true);
+}
 
 export interface AccordionProps extends ViewProps {
   title: string;
@@ -24,12 +39,28 @@ const Accordion: React.FC<AccordionProps> = ({
   ...props
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const rotationValue = useRef(new Animated.Value(0)).current;
+
   const colors = getThemeColors(theme);
   const styles = useMemo(() => createStyles(colors), [colors]);
 
+  useEffect(() => {
+    Animated.timing(rotationValue, {
+      toValue: isExpanded ? 1 : 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  }, [isExpanded, rotationValue]);
+
   const toggleAccordion = useCallback(() => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
     setIsExpanded((prev) => !prev);
   }, []);
+
+  const rotate = rotationValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['0deg', '180deg'],
+  });
 
   const renderIcon = () => {
     if (isExpanded && collapseIcon) {
@@ -40,11 +71,11 @@ const Accordion: React.FC<AccordionProps> = ({
     }
     // Fallback: render a simple chevron using View
     return (
-      <View
+      <Animated.View
         style={[
           styles.icon,
           {
-            transform: [{ rotate: isExpanded ? '180deg' : '0deg' }],
+            transform: [{ rotate }],
             borderTopWidth: 2,
             borderRightWidth: 2,
             borderColor: colors.text.primary,
@@ -93,6 +124,7 @@ const createStyles = (colors: ColorTypes) =>
       backgroundColor: colors.background.primary,
       borderRadius: 8,
       padding: 15,
+      overflow: 'hidden',
     },
     header: {
       flexDirection: 'row',

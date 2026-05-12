@@ -1,5 +1,5 @@
 import { getThemeColors } from '../../../utils';
-import type { AppearanceMode } from '../../../theme';
+import { scaleHeight, type AppearanceMode } from '../../../theme';
 import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import {
   Animated,
@@ -321,11 +321,12 @@ const styles = StyleSheet.create({
   rowBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'flex-start',
+    alignItems: 'center',
   },
   label: {
     flexWrap: 'wrap',
     flex: 1,
+    marginTop: scaleHeight(3),
   },
   circleBorder: {
     justifyContent: 'center',

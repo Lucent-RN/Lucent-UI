@@ -1,5 +1,12 @@
 import React, { useEffect, useMemo, useRef } from 'react';
-import { Animated, Modal, Platform, Pressable, StyleSheet } from 'react-native';
+import {
+  Animated,
+  Modal,
+  Platform,
+  Pressable,
+  StyleSheet,
+  View,
+} from 'react-native';
 import type { StyleProp, ViewStyle } from 'react-native';
 
 import type { AppearanceMode, ColorTypes } from '../../../theme';
@@ -112,12 +119,6 @@ const Dialog: React.FC<DialogProps> = ({
     }
   }, [isOpen, fadeAnim, scaleAnim, backdropOpacity, animationDuration]);
 
-  const handleOverlayPress = () => {
-    if (closeOnOverlayClick) {
-      onClose();
-    }
-  };
-
   if (!isOpen) {
     return null;
   }
@@ -130,10 +131,7 @@ const Dialog: React.FC<DialogProps> = ({
       statusBarTranslucent
       onRequestClose={onClose}
     >
-      <Pressable
-        style={[styles.overlay, overlayStyle]}
-        onPress={handleOverlayPress}
-      >
+      <View style={[styles.overlay, overlayStyle]}>
         <Animated.View
           style={[
             styles.backdrop,
@@ -141,27 +139,25 @@ const Dialog: React.FC<DialogProps> = ({
               opacity: backdropOpacity,
             },
           ]}
-        />
-        <Pressable
-          onPress={(e) => e.stopPropagation()}
-          style={styles.contentWrapper}
-          pointerEvents="box-none"
         >
-          <Animated.View
-            style={[
-              styles.content,
-              contentStyle,
-              {
-                opacity: fadeAnim,
-                transform: [{ scale: scaleAnim }],
-              },
-            ]}
-            pointerEvents="box-none"
-          >
-            {children}
-          </Animated.View>
-        </Pressable>
-      </Pressable>
+          <Pressable
+            style={StyleSheet.absoluteFill}
+            onPress={() => closeOnOverlayClick && onClose()}
+          />
+        </Animated.View>
+        <Animated.View
+          style={[
+            styles.content,
+            contentStyle,
+            {
+              opacity: fadeAnim,
+              transform: [{ scale: scaleAnim }],
+            },
+          ]}
+        >
+          {children}
+        </Animated.View>
+      </View>
     </Modal>
   );
 };
@@ -172,25 +168,22 @@ const createStyles = (colors: ColorTypes, isTablet: boolean) =>
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    backdrop: {
+      ...StyleSheet.absoluteFill,
+      backgroundColor: 'rgba(0, 0, 0, 0.6)',
       ...Platform.select({
         ios: {
           backdropFilter: 'blur(8px)',
         },
       }),
     },
-    backdrop: {
-      ...StyleSheet.absoluteFillObject,
-      backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    },
-    contentWrapper: {
-      width: '100%',
-      maxWidth: isTablet ? scaleWidth(500) : scaleWidth(400),
-      paddingHorizontal: scaleWidth(16),
-      zIndex: 1,
-    },
     content: {
+      width: '90%',
+      maxWidth: isTablet ? scaleWidth(500) : scaleWidth(400),
       backgroundColor: colors.background.primary,
       borderRadius: isTablet ? scaleWidth(16) : scaleWidth(20),
+      overflow: 'hidden',
       ...Platform.select({
         ios: {
           shadowColor: '#000',

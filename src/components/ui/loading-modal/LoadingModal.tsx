@@ -198,7 +198,6 @@ const createStyles = (colors: ColorTypes, isTablet: boolean) =>
       fontSize: isTablet
         ? scaleWidth(fontTablets.size.medium)
         : scaleWidth(fonts.size.medium),
-      fontFamily: fonts.fontFamily.medium,
       color: colors.text.secondary,
       textAlign: 'center',
       marginTop: scaleHeight(spacing_tokens.s_4),
