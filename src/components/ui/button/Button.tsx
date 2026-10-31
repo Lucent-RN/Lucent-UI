@@ -8,9 +8,9 @@ import {
 } from 'react-native';
 import type {
   ImageURISource,
-  PressableProps,
   StyleProp,
   TextStyle,
+  TouchableOpacityProps,
   ViewStyle,
 } from 'react-native';
 
@@ -30,8 +30,10 @@ import type { ButtonSize, ButtonVariant, IconPosition } from './utils';
 /**
  * Props for the custom Button component using React Native Elements.
  */
-export interface ButtonProps
-  extends Omit<PressableProps, 'style' | 'onPress' | 'size'> {
+export interface ButtonProps extends Omit<
+  TouchableOpacityProps,
+  'style' | 'onPress' | 'size'
+> {
   title?: string;
   onPress: () => void;
   variant?: ButtonVariant;
